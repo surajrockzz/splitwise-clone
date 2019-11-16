@@ -25,6 +25,9 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
     },
 });
+
+// buttons are not working in menu 
+// and fix css issuess in DrawerCompoennt
 const DrawerComponent = ({ handleDrawerClose, open }) => {
     const classes = useStyles();
     return (
