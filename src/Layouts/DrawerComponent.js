@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Drawer, Divider, List, ListItemText } from '@material-ui/core';
+import { Drawer, Divider, List, Button } from '@material-ui/core';
 import ListItem from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/icons/List';
 import IconButton from '@material-ui/core/IconButton';
@@ -9,7 +9,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
-const drawerWidth = 240;
+const drawerWidth = 200 ;
 const useStyles = makeStyles({
     drawer: {
         width: drawerWidth,
@@ -20,12 +20,11 @@ const useStyles = makeStyles({
     },
     drawerHeader: {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'left',
         padding: "0 1px",
         justifyContent: 'flex-end',
     },
 });
-
 // buttons are not working in menu 
 // and fix css issuess in DrawerCompoennt
 const DrawerComponent = ({ handleDrawerClose, open }) => {
@@ -48,18 +47,18 @@ const DrawerComponent = ({ handleDrawerClose, open }) => {
             <Divider />
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                    <ListItem key={text}>
+                        {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+                        <Button>{text}</Button>
                     </ListItem>
                 ))}
             </List>
             <Divider />
             <List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                    <ListItem key={text}>
+                        {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+                        <Button>{text}</Button>
                     </ListItem>
                 ))}
             </List>
