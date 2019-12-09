@@ -8,6 +8,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import {Link} from 'react-router-dom';
+import {firstSection, secondSection} from '../Routes/routes'
 
 const drawerWidth = 200 ;
 const useStyles = makeStyles({
@@ -29,6 +31,7 @@ const useStyles = makeStyles({
 // and fix css issuess in DrawerCompoennt
 const DrawerComponent = ({ handleDrawerClose, open }) => {
     const classes = useStyles();
+    
     return (
         <Drawer
             className={classes.drawer}
@@ -46,19 +49,19 @@ const DrawerComponent = ({ handleDrawerClose, open }) => {
             </div>
             <Divider />
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text}>
+                {firstSection.map((button) => (
+                    <ListItem key={button.name}>
                         {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                        <Button>{text}</Button>
+                        <Link to={button.path}><Button>{button.name}</Button></Link>
                     </ListItem>
                 ))}
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text}>
+                {secondSection.map((button) => (
+                    <ListItem key={button.name}>
                         {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                        <Button>{text}</Button>
+                        <Link to={button.path}><Button>{button.name}</Button></Link>
                     </ListItem>
                 ))}
             </List>
