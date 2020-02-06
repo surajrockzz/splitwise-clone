@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/styles';
+import {Link} from 'react-router-dom';
 import DrawerComponent from './DrawerComponent';
 import clsx from 'clsx';
 
@@ -60,7 +61,7 @@ const Header = props => {
                 <Typography variant="h5" style={styles.heading}>
                     Splitwise
                 </Typography>
-                <Button color="inherit" style={styles.button}>Login</Button>
+                <Link to='/login'><Button color="inherit" style={styles.button}>Login</Button></Link>
                 <Button color="inherit" style={styles.button}>SignUp</Button>
                 <Button color="inherit" aria-controls="settings-menu" aria-haspopup="true" onClick={handleClick} style={styles.button}>
                     <Avatar className={materialStyles.orangeAvatar}>SJ</Avatar>

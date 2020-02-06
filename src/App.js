@@ -8,6 +8,7 @@ import Friends from './Components/Friends';
 import RecentAcitivity from './Components/RecentActivity';
 import Invite from './Components/Invite';
 import Groups from './Components/Groups';
+import Login from './Components/Login';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <div className="App">
         <Header />
         <Container fixed>
+        <Route exact path='/login' component={Login}/>
         <Route exact path='/dashboard' component={Dashboard}/>
         <Route exact path='/activity' component={RecentAcitivity}/>
         <Route exact path='/all' component={AllExpenses}/>
