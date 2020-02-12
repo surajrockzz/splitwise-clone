@@ -20,3 +20,42 @@
 .App-link {
   color: #09d3ac;
 }
+
+.loginContainer {
+  margin-top: 15%;
+}
+
+.logoDiv {
+  margin-top: 7%;
+}
+
+.inputField{
+  grid-area: 2/2/4/5;
+}
+
+.passwordField {
+  grid-area: 3/2/4/5;
+}
+
+.loginButton {
+  grid-area: 4/3;
+}
+
+.registerButton {
+  grid-area: 4/4;
+}
+.fieldsDiv {
+  display: grid;
+  margin-top: 10%;
+  grid-template-rows: 1rem 4rem 4rem 3rem;
+  grid-template-columns: 3rem auto 6rem 6rem 3rem;
+  width: 500px;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+}
+
+.paperDiv {
+  margin-left: 25%;
+  height: 500px;
+  width: 500px;
+}
