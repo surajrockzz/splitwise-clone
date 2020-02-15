@@ -23,6 +23,11 @@
   color: white;
 }
 
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .d-grid {
   display: grid;
 }
