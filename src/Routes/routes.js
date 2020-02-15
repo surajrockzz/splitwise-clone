@@ -1,3 +1,4 @@
+const serverUrl = 'http://localhost:3002';
 const firstSection = [
     {
         name: 'Dashboard',
@@ -30,4 +31,4 @@ const secondSection = [
 ];
 
 
-export {secondSection, firstSection};
+export {secondSection, firstSection, serverUrl};

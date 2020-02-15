@@ -2,12 +2,9 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Drawer, Divider, List, Button } from '@material-ui/core';
 import ListItem from '@material-ui/core/List';
-import ListItemIcon from '@material-ui/icons/List';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import {Link} from 'react-router-dom';
 import {firstSection, secondSection} from '../Routes/routes'
 
