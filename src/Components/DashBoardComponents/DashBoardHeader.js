@@ -69,20 +69,27 @@ const InputWithChips = () => {
     )
 }
 
-const StaticDatePickerModal = () => {
-    const [date, changeDate] = useState(new Date());
+/**
+ * start by doing get selected date to the normal cmoponent
+ */
+const StaticDatePickerModal = ({ date, onDateChanged }) => {
+    
     const [calenderVisible, setcalenderVisible] = useState(false);
     const handleCalenderVisible = () => {
         setcalenderVisible(!calenderVisible);
     }
+    /**
+     * selected date is a moment object to make it comforatable converting it into date object
+     * @param {*} selectedDate 
+     */
     const handleDateChange = (selectedDate) => {
-        console.log(selectedDate);
-        changeDate(selectedDate);
+        let dateString = selectedDate.format('YYYY-MM-DD');
         setcalenderVisible(!calenderVisible);
+        onDateChanged(new Date(dateString));
     }
 
     return (<>
-        <Chip icon={<FaceIcon />} label="choose date" variant="outlined" onClick={handleCalenderVisible} />
+        <Chip label={date.toDateString()} variant="outlined" onClick={handleCalenderVisible} />
         <Dialog onClose={handleCalenderVisible} aria-labelledby="customized-dialog-title" open={calenderVisible}>
             <CustomisedDialogTitle id="simple-dialog-title" onClose={handleCalenderVisible}>
                 Choose Date
@@ -116,11 +123,15 @@ const CustomisedDialogTitle = (props) => {
 }
 const DashBoardHeader = (props) => {
     const [open, setOpen] = React.useState(false);
+    const [date, changeDate] = useState(new Date());
     const handleClickopen = () => {
         setOpen(true);
     }
     const handleClose = () => {
         setOpen(false);
+    }
+    const handleDateChange  = (date) => {
+        changeDate(date);
     }
     const classes = useStyles();
     return (
@@ -149,7 +160,7 @@ const DashBoardHeader = (props) => {
                                 lacus vel augue laoreet rutrum faucibus dolor auctor.
                             </Typography>
                             <MuiPickersUtilsProvider utils={MomentUtils}>
-                                <StaticDatePickerModal />
+                                <StaticDatePickerModal date = {date} onDateChanged={handleDateChange}/>
                             </MuiPickersUtilsProvider>
                         </DialogContent>
                         <DialogActions>

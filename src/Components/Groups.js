@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const Groups = () => {
-    return (<>
-    this is Groups page
-    </>)
-}
+  return <>this is Groups page</>;
+};
 
 export default Groups;
