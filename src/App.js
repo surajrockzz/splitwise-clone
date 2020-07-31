@@ -11,6 +11,7 @@ import Invite from "./Components/Invite";
 import Groups from "./Components/Groups";
 import Login from "./Components/Login";
 import SignUpForm from "./Components/SignUpForm";
+import CustomSnackBar from "./Components/CustomSnackBar";
 
 import "./styles/app.css";
 export const AuthContext = React.createContext();
@@ -26,41 +27,42 @@ function App() {
   });
 
   return (
-    <Router>
-      <AuthContext.Provider value={initialState}>
-        <ThemeProvider theme={theme}>
-          <div className="App">
-            <Header />
-            <Container fixed>
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route exact path="/dashboard">
-                <Dashboard />
-              </Route>
-              <Route exact path="/activity">
-                <RecentAcitivity />
-              </Route>
-              <Route exact path="/all">
-                <AllExpenses />
-              </Route>
-              <Route exact path="/groups">
-                <Groups />
-              </Route>
-              <Route exact path="/friends">
-                <Friends />
-              </Route>
-              <Route exact path="/invite">
-                <Invite />
-              </Route>
-              <Route exact path="/signup">
-                <SignUpForm />
-              </Route>
-            </Container>
-          </div>
-        </ThemeProvider>
-      </AuthContext.Provider>
-    </Router>
+      <Router>
+        <AuthContext.Provider value={initialState}>
+          <ThemeProvider theme={theme}>
+            <div className="App">
+              <CustomSnackBar />
+              <Header />
+              <Container fixed>
+                <Route exact path="/login">
+                  <Login />
+                </Route>
+                <Route exact path="/dashboard">
+                  <Dashboard />
+                </Route>
+                <Route exact path="/activity">
+                  <RecentAcitivity />
+                </Route>
+                <Route exact path="/all">
+                  <AllExpenses />
+                </Route>
+                <Route exact path="/groups">
+                  <Groups />
+                </Route>
+                <Route exact path="/friends">
+                  <Friends />
+                </Route>
+                <Route exact path="/invite">
+                  <Invite />
+                </Route>
+                <Route exact path="/signup">
+                  <SignUpForm />
+                </Route>
+              </Container>
+            </div>
+          </ThemeProvider>
+        </AuthContext.Provider>
+      </Router>
   );
 }
 

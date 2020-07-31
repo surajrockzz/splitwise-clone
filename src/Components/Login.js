@@ -22,7 +22,7 @@ const CFormControl = overrideComponentStyles(FormControl, {
 const CButton = overrideComponentStyles(Button, {
   root: {
     marginLeft: "0.5rem",
-  }
+  },
 });
 
 const Login = () => {

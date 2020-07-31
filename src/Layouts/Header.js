@@ -23,15 +23,14 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomisedButton = withStyles({
+const CButton = withStyles({
   root: {
     color: "white",
     "&:active": {
       border: "none",
     },
     "&:focus": {
-      border: "none",
-      boxShadow: "none",
+      outline: "none"
     },
   },
 })(Button);
@@ -68,19 +67,44 @@ const Header = (props) => {
       <div>
         <AppBar position="static">
           <Toolbar>
-            <div className="menuButton">
-              <IconButton
-                color="inherit"
-                onClick={handleDrawerOpen}
-                edge="start"
-              >
-                <MenuIcon />
-              </IconButton>
-            </div>
-            <div className="flex justify-end max-w-2xl">
-              <div>suraj</div>
-              <div>suraj</div>
-              <div>suraj</div>
+            <IconButton color="inherit" onClick={handleDrawerOpen} edge="start">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h5">Splitwise</Typography>
+            <div className="inline-flex ml-auto items-center">
+              {!isAuthenticated && (
+                <>
+                  <Link to="/login">
+                    <CButton>Login</CButton>
+                  </Link>
+                  <Link to="/signup">
+                    <CButton>SignUp</CButton>
+                  </Link>
+                </>
+              )}
+              {isAuthenticated && (
+                <>
+                  <Button
+                    color="inherit"
+                    aria-controls="settings-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                  >
+                    <Avatar className={materialStyles.orangeAvatar}>SJ</Avatar>
+                  </Button>
+                  <Menu
+                    id="settings-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>Your Account</MenuItem>
+                    <MenuItem onClick={handleClose}>Create a Group</MenuItem>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </Menu>
+                </>
+              )}
             </div>
           </Toolbar>
         </AppBar>

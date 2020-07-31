@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { TextField, Button, FormHelperText, Snackbar } from "@material-ui/core";
-import { Redirect } from "react-router-dom";
-
-import { validateEmail } from "../helpers";
+import {
+  TextField,
+  Button,
+  FormHelperText,
+  Typography,
+  FormControl,
+} from "@material-ui/core";
+import PasswordComponent from "./Core/PasswordComponent";
+import { showSnackBar } from "../reducers/snackBarSlice";
+import { useDispatch } from "react-redux";
+import { validateEmail, overrideComponentStyles } from "../helpers";
 import { handleSignUpService } from "../services/signUpService";
 
-const ModifiedRButton = withStyles({
+const ModifiedRButton = overrideComponentStyles(Button, {
   root: {
     marginRight: "1rem",
   },
-})(Button);
+});
 
-const ModifiedLButton = withStyles({
+const ModifiedLButton = overrideComponentStyles(Button, {
   root: {
     marginLeft: "1rem",
   },
-})(Button);
+});
+
+const CFormControl = overrideComponentStyles(FormControl, {
+  root: {
+    marginBottom: "1.25rem",
+  },
+});
 
 const SignUpForm = () => {
   const initialState = {
@@ -25,21 +37,18 @@ const SignUpForm = () => {
     email: "",
     confirmPassword: "",
     phoneNumber: "",
+    showPassword: false,
   };
+  const dispatch = useDispatch();
   const [values, setValues] = useState({ ...initialState });
   const [canFormSave, setCanFormSave] = useState(false);
-  const [open, setOpen] = useState(false); // for snackBar
-
-  // for snackBar
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
 
   const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    if (prop !== "showPassword") {
+      setValues({ ...values, [prop]: event.target.value });
+    } else {
+      setValues({ ...values, [prop]: !values.showPassword });
+    }
   };
 
   useEffect(() => {
@@ -72,10 +81,14 @@ const SignUpForm = () => {
     return !(password.length > 8 && password === confirmPassword);
   };
 
-  const [redirect, setRedirect] = useState(false);
-
   const handleClear = () => {
-    setValues({ ...initialState });
+    dispatch(
+      showSnackBar({
+        open: true,
+        message: "User Successfully created",
+      })
+    );
+    // setValues({ ...initialState });
   };
 
   const handleSignUp = async () => {
@@ -91,21 +104,17 @@ const SignUpForm = () => {
       handleClear();
     }
     if (response?.data) {
-      setOpen(true);
-      // setRedirect(true);
-    }
-  };
-  const renderRedirect = () => {
-    if (redirect) {
-      return <Redirect to="/login" />;
+      // setOpen(true);
     }
   };
 
   return (
     <>
       <div className="flex flex-col mt-6">
-        {renderRedirect()}
         <div className="mb-5">
+          <Typography variant="h5" gutterBottom>
+            SignUp
+          </Typography>
           <TextField
             label="Username"
             type="text"
@@ -115,21 +124,14 @@ const SignUpForm = () => {
             onChange={handleChange("username")}
           />
         </div>
-        <div className="mb-5">
-          <TextField
-            id="password-field"
-            label="Password"
-            type="password"
-            variant="outlined"
-            className="inputField  w-full"
+        <CFormControl variant="outlined" error={validatePassword(values)}>
+          <PasswordComponent
+            id="signup-password"
             value={values.password}
             onChange={handleChange("password")}
-            error={validatePassword(values)}
+            showHelperText={true}
           />
-          <FormHelperText id="password-field" error={validatePassword(values)}>
-            Minimum length should be 8
-          </FormHelperText>
-        </div>
+        </CFormControl>
         <div className="mb-5">
           <TextField
             label="Confirm Password"
@@ -194,13 +196,6 @@ const SignUpForm = () => {
           </ModifiedLButton>
         </div>
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        autoHideDuration={6000}
-        open={open}
-        onClose={handleClose}
-        message="User Successfully Created."
-      />
     </>
   );
 };

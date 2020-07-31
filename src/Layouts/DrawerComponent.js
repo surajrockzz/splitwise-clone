@@ -1,14 +1,22 @@
 import React, { memo } from "react";
-import { makeStyles } from "@material-ui/styles";
-import { Drawer, Divider, List, Button } from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/styles";
+import {
+  Drawer,
+  Divider,
+  List,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
 import ListItem from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import InboxIcon from "@material-ui/icons/Inbox";
+import MailIcon from "@material-ui/icons/Mail";
 import { Link } from "react-router-dom";
 import { firstSection, secondSection } from "../Routes/routes";
 
-const drawerWidth = 200;
+const drawerWidth = 250;
 const useStyles = makeStyles({
   drawer: {
     width: drawerWidth,
@@ -17,15 +25,21 @@ const useStyles = makeStyles({
   drawerPaper: {
     width: drawerWidth,
   },
-  drawerHeader: {
-    display: "flex",
-    alignItems: "left",
-    padding: "0 1px",
-    justifyContent: "flex-end",
-  },
 });
-// buttons are not working in menu
-// and fix css issuess in DrawerCompoennt
+
+const CListItem = withStyles({
+  root: {
+    display: "inline-flex",
+    alignItems: "center",
+  },
+})(ListItem);
+
+const CListItemIcon = withStyles({
+  root: {
+    paddingLeft: "1rem",
+  },
+})(ListItemIcon);
+
 const DrawerComponent = ({ handleDrawerClose, open }) => {
   const classes = useStyles();
 
@@ -39,31 +53,35 @@ const DrawerComponent = ({ handleDrawerClose, open }) => {
         paper: classes.drawerPaper,
       }}
     >
-      <div className={classes.drawerHeader}>
+      <div>
         <IconButton onClick={handleDrawerClose}>
           {"ltr" === "trr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </div>
       <Divider />
       <List>
-        {firstSection.map((button) => (
-          <ListItem key={button.name}>
-            {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-            <Link to={button.path}>
-              <Button>{button.name}</Button>
-            </Link>
-          </ListItem>
+        {firstSection.map((button, index) => (
+          <Link to={button.path} key={index}>
+            <CListItem key={button.name}>
+              <CListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </CListItemIcon>
+              <ListItemText primary={button.name} />
+            </CListItem>
+          </Link>
         ))}
       </List>
       <Divider />
       <List>
-        {secondSection.map((button) => (
-          <ListItem key={button.name}>
-            {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-            <Link to={button.path}>
-              <Button>{button.name}</Button>
-            </Link>
-          </ListItem>
+        {secondSection.map((button, index) => (
+          <Link to={button.path} className="block" key={index}>
+            <CListItem key={button.name}>
+              <CListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </CListItemIcon>
+              <ListItemText primary={button.name} />
+            </CListItem>
+          </Link>
         ))}
       </List>
     </Drawer>
