@@ -1,88 +1,117 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button, Avatar, Menu, MenuItem, IconButton } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles } from '@material-ui/styles';
-import {Link} from 'react-router-dom';
-import DrawerComponent from './DrawerComponent';
-import clsx from 'clsx';
+import React, { useContext } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Avatar,
+  Menu,
+  MenuItem,
+  IconButton,
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import DrawerComponent from "./DrawerComponent";
+import { AuthContext } from "../App";
 
 const useStyles = makeStyles({
-    orangeAvatar: {
-        color: '#fff',
-        backgroundColor: "#4fc3f7",
-        margin: "1%"
-    },
-    menuButton: {
-        marginRight: '5px'
-    },
-    hide: {
-        display: 'none',
-    },
+  orangeAvatar: {
+    color: "#fff",
+    backgroundColor: "#4fc3f7",
+    margin: "1%",
+  },
 });
 
-const Header = props => {
-    const styles = {
-        button: {
-            padding: "1%"
-        },
-        heading: {
-            paddingRight: "73%",
-            paddingLeft: "2%"
-        },
+const CButton = withStyles({
+  root: {
+    color: "white",
+    "&:active": {
+      border: "none",
+    },
+    "&:focus": {
+      outline: "none"
+    },
+  },
+})(Button);
+
+const Header = (props) => {
+  const materialStyles = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { isAuthenticated, setisAuthenticated } = useContext(AuthContext);
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    if (isAuthenticated) {
+      let browserStorage = window.localStorage;
+      browserStorage.removeItem("x-auth-token");
+      setisAuthenticated(false);
     }
-    const materialStyles = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [open, setOpen] = React.useState(false);
+    setAnchorEl(null);
+  };
 
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
-
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    return (
-        <>
+  return (
+    <>
+      <div>
         <AppBar position="static">
-            <Toolbar>
-                <IconButton
+          <Toolbar>
+            <IconButton color="inherit" onClick={handleDrawerOpen} edge="start">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h5">Splitwise</Typography>
+            <div className="inline-flex ml-auto items-center">
+              {!isAuthenticated && (
+                <>
+                  <Link to="/login">
+                    <CButton>Login</CButton>
+                  </Link>
+                  <Link to="/signup">
+                    <CButton>SignUp</CButton>
+                  </Link>
+                </>
+              )}
+              {isAuthenticated && (
+                <>
+                  <Button
                     color="inherit"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    className={clsx(materialStyles.menuButton, open && materialStyles.hide)}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h5" style={styles.heading}>
-                    Splitwise
-                </Typography>
-                <Link to='/login'><Button color="inherit" style={styles.button}>Login</Button></Link>
-                <Button color="inherit" style={styles.button}>SignUp</Button>
-                <Button color="inherit" aria-controls="settings-menu" aria-haspopup="true" onClick={handleClick} style={styles.button}>
+                    aria-controls="settings-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                  >
                     <Avatar className={materialStyles.orangeAvatar}>SJ</Avatar>
-                </Button>
-                <Menu
+                  </Button>
+                  <Menu
                     id="settings-menu"
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
-                >
+                  >
                     <MenuItem onClick={handleClose}>Your Account</MenuItem>
                     <MenuItem onClick={handleClose}>Create a Group</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
-            </Toolbar>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </Menu>
+                </>
+              )}
+            </div>
+          </Toolbar>
         </AppBar>
-        <DrawerComponent handleDrawerClose = {() => setOpen(false)} open = {open}/>
-        </>
-        )
-}
+      </div>
+      <DrawerComponent handleDrawerClose={() => setOpen(false)} open={open} />
+    </>
+  );
+};
 
 export default Header;
-

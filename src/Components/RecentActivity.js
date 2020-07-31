@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const RecentActivity = () => {
-    return (<>
-    this is recent activity
-    </>)
-}
+  return <>this is recent activity</>;
+};
 
-export default RecentActivity
+export default RecentActivity;
